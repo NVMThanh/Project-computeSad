@@ -1,0 +1,85 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+package sadlib is
+    component MEMORY IS
+        GENERIC ( 
+            INPUT_WIDTH : integer := 8;
+            OUTPUT_WIDTH : integer := 8;
+            ADDRESS_WIDTH : integer := 4
+        );
+        PORT(
+            RST      : IN STD_LOGIC;
+            CLK      : IN STD_LOGIC;
+            Wen      : IN STD_LOGIC;
+            Ren      : IN STD_LOGIC;
+            Address  : IN STD_LOGIC_VECTOR((ADDRESS_WIDTH-1) DOWNTO 0);
+            Din      : IN STD_LOGIC_VECTOR((INPUT_WIDTH-1) DOWNTO 0);
+            Dout     : OUT STD_LOGIC_VECTOR((OUTPUT_WIDTH-1) DOWNTO 0)
+        );
+    END component;
+
+    component Counter IS
+        PORT (
+            RST : IN STD_LOGIC;
+            CLK : IN STD_LOGIC;
+            EN  : IN STD_LOGIC;
+            CLR : IN STD_LOGIC;  -- Changed Load to CLR for clarity
+            COUNT : OUT STD_LOGIC_VECTOR(4 DOWNTO 0)
+        );
+    END component;
+  
+    component datapath IS
+    PORT (
+        -- Reset and clock signals
+        RST : IN STD_LOGIC;
+        CLK : IN STD_LOGIC;
+        
+        -- Memory control signals
+        Wen1, Wen2, Wen3 : IN STD_LOGIC;
+        Ren1, Ren2, Ren3 : IN STD_LOGIC;
+        Address1, Address2, Address3 : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+        Din1, Din2 : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        
+        -- Memory data output signals
+        Dout1, Dout2, Dout3 : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+        
+        -- Counter control signals
+        EN_count, CLR_count_in : IN STD_LOGIC;
+        
+        -- Counter data output signal
+        COUNT : OUT STD_LOGIC_VECTOR(4 DOWNTO 0);
+        
+        -- Output signal to be driven by internal logic
+        Din3 : INOUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+        
+        -- Additional output for comparison result
+        COMPARE : OUT STD_LOGIC
+    );
+    END component;
+
+    component controller IS
+    PORT (
+        COMPARE : IN STD_LOGIC;
+        CLK, RST : IN STD_LOGIC;
+        START : IN STD_LOGIC;
+        Done : OUT STD_LOGIC;
+        -- Internal signals for controlling the data path
+        EN_count : OUT STD_LOGIC;
+        CLR_count : OUT STD_LOGIC;
+        Wen3, Wen2, Wen1 : OUT STD_LOGIC;
+        Ren1, Ren2, Ren3 : OUT STD_LOGIC
+    );
+    END component;
+
+    component sad IS
+    PORT (
+        CLK, RST, START, Wen1, Wen2, Wen3: IN STD_LOGIC;
+        Din1, Din2 : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        done : OUT STD_LOGIC
+    );
+    END component;
+
+end package sadlib;
+
