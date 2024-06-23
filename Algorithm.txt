@@ -1,0 +1,21 @@
+process(dataA, dataB, matrix_size, start)
+    variable SAD : integer := 0;
+    variable i : integer;
+    variable difference : integer;
+begin
+    wait until start = '1';
+    Done <= '0';
+    SAD := 0;
+
+    for i in 0 to matrix_size - 1 loop
+        difference := dataA(i) - dataB(i);
+        if difference >= 0 then
+            SAD := SAD + difference;
+        else
+            SAD := SAD - difference;
+        end if;
+    end loop;
+
+    Done <= '1';
+    SAD_result <= SAD;
+end process;
