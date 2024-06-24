@@ -1,4 +1,3 @@
-
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
@@ -8,7 +7,9 @@ ENTITY sad IS
         CLK, RST, START: IN STD_LOGIC;
         Wen1, Wen2, Wen3: OUT STD_LOGIC;
         Din1, Din2 : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-        done : OUT STD_LOGIC
+        done : OUT STD_LOGIC;
+	Dout3 : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+	COUNT : OUT STD_LOGIC_VECTOR(4 DOWNTO 0)
     );
 END ENTITY sad;
 
@@ -16,9 +17,8 @@ ARCHITECTURE rtl OF sad IS
     -- Internal signals to connect datapart and controller
     SIGNAL Ren1, Ren2, Ren3 : STD_LOGIC;
     SIGNAL Address1, Address2, Address3 : STD_LOGIC_VECTOR(3 DOWNTO 0);
-    SIGNAL Dout1, Dout2, Dout3 : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL Dout1, Dout2: STD_LOGIC_VECTOR(7 DOWNTO 0);
     SIGNAL EN_count, CLR_count_in : STD_LOGIC;
-    SIGNAL COUNT : STD_LOGIC_VECTOR(4 DOWNTO 0);
     SIGNAL Din3 : STD_LOGIC_VECTOR(7 DOWNTO 0);
     SIGNAL COMPARE : STD_LOGIC;
     SIGNAL Done_internal : STD_LOGIC;
@@ -94,3 +94,4 @@ BEGIN
     Wen3 <= internal_Wen3;
 
 END ARCHITECTURE rtl;
+

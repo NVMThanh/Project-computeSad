@@ -16,7 +16,8 @@ architecture behavior of sad_tb is
     signal start : std_logic := '0';
     signal done : std_logic := '0';
     signal wen1, wen2, wen3 : std_logic := '0';
-    signal din1, din2 : std_logic_vector(input_w - 1 downto 0) := (others => '0');
+    signal din1, din2 ,dout3: std_logic_vector(input_w - 1 downto 0) := (others => '0');
+    signal COUNT: STD_LOGIC_VECTOR(4 DOWNTO 0);
 
     constant CLK_PERIOD : time := 100 ns;
 begin
@@ -31,7 +32,9 @@ begin
             Wen3 => wen3,
             Din1 => din1,
             Din2 => din2,
-            done => done
+	    Dout3 => dout3,
+            done => done,
+	    COUNT => count
         );
 
     -- Clock generation process
@@ -80,12 +83,13 @@ begin
 
         din1 <= std_logic_vector(to_unsigned(1, input_w));
         din2 <= std_logic_vector(to_unsigned(10, input_w));
+	start <= '1';
+	wen1 <= '0'; 
+	wen2 <= '0'; 
+	wen3 <= '1';
         wait for CLK_PERIOD;
 
-        -- Start the SAD operation
-        start <= '1';
-        wait for CLK_PERIOD;
-
+   
         -- Wait for the done signal
         wait until done = '1';
 
@@ -93,3 +97,4 @@ begin
         wait;
     end process;
 end architecture behavior;
+

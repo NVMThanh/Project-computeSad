@@ -77,8 +77,11 @@ package sadlib is
     PORT (
         CLK, RST, START, Wen1, Wen2, Wen3: IN STD_LOGIC;
         Din1, Din2 : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-        done : OUT STD_LOGIC
+        done : OUT STD_LOGIC;
+	Dout3: OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+	COUNT: OUT STD_LOGIC_VECTOR(4 DOWNTO 0)
     );
     END component;
 
 end package sadlib;
+

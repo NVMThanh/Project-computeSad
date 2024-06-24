@@ -40,7 +40,7 @@ ARCHITECTURE structural OF datapath IS
     SIGNAL START_sig : STD_LOGIC := '0';
     
     -- Internal address signals
-    SIGNAL addr1, addr2, addr3 : STD_LOGIC_VECTOR(3 DOWNTO 0);  -- Adjusted to match Address width
+    SIGNAL addr1, addr2, addr3 : STD_LOGIC_VECTOR(3 DOWNTO 0); 
 
     -- New signal for Dout1 - Dout2
     SIGNAL Dout_diff : STD_LOGIC_VECTOR(7 DOWNTO 0);
@@ -53,9 +53,11 @@ BEGIN
     CLR_count <= '0' WHEN START_sig = '0' ELSE '1';
 
     -- Assign internal address signals (truncate if needed)
-    addr1 <= Address1(3 DOWNTO 0);  -- Ensure correct slicing based on Address width
-    addr2 <= Address2(3 DOWNTO 0);
-    addr3 <= Address3(3 DOWNTO 0);
+
+     addr1 <= Address1;
+     addr2 <= Address2;
+
+     addr3 <= Address3;
 
     -- Difference and absolute difference calculations
     Dout_diff <= std_logic_vector(signed(Dout_reg1) - signed(Dout_reg2));
@@ -63,7 +65,7 @@ BEGIN
     COMPARE <= '1' WHEN abs_Dout_diff > "00000000" ELSE '0';  -- Use 'others' for initialization to zero
     
     -- Connect Din3 to Memory 3
-    Din3 <= abs_Dout_diff;  -- Directly connect Din3 to this architecture's signal
+    Din3 <= abs_Dout_diff;
     
     -- Instantiate Memory 1
     mem1: MEMORY GENERIC MAP (
@@ -109,7 +111,7 @@ BEGIN
         Wen => Wen3,
         Ren => Ren3,
         Address => addr3,
-        Din => Din3,  -- Connect Din3 directly to this architecture's signal
+        Din => Din3,
         Dout => Dout_reg3
     );
 
@@ -132,3 +134,4 @@ BEGIN
     COUNT <= count_reg;
     
 END structural;
+

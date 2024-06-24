@@ -77,42 +77,41 @@ BEGIN
     BEGIN
         -- Default signal values
         Done_internal <= '0';
-        EN_count <= '0';
+        EN_count <= '1';
         CLR_count <= '0';
         Wen3 <= '0';
-        Ren1 <= '0';
-        Ren2 <= '0';
+        Wen2 <= '0';
+        Wen1 <= '0';
+        Ren1 <= '1';
+        Ren2 <= '1';
         Ren3 <= '0';
 
         CASE state IS
             WHEN RESET =>
-                CLR_count <= '1';
                 Done_internal <= '0';
             WHEN SETUP =>
-                CLR_count <= '0';
-                EN_count <= '1';
                 Done_internal <= '0';
                 Wen1 <= '1';
                 Wen2 <= '1';
+                Wen3 <= '0';
+                Ren3 <= '0';
             WHEN START_STATE =>
-                CLR_count <= '1';
-                EN_count <= '0';
-                Wen1 <= '0';
-                Wen2 <= '0';
+                Wen1 <= '1';
+                Wen2 <= '1';
+                Wen3 <= '1';
+                Ren3 <= '1';
+                Ren1 <= '1';
+                Ren2 <= '1';
                 Done_internal <= '0';
             WHEN CALCULATE =>
-                CLR_count <= '0';
-                EN_count <= '1';
                 Ren1 <= '1';
                 Ren2 <= '1';
                 Done_internal <= '0';
             WHEN COMPARE_STATE =>
-                EN_count <= '1';
                 Ren1 <= '1';
                 Ren2 <= '1';
                 Done_internal <= '0';
             WHEN ADD =>
-                EN_count <= '1';
                 Ren1 <= '1';
                 Ren2 <= '1';
                 Ren3 <= '1';
@@ -126,7 +125,6 @@ BEGIN
                 Wen3 <= '1';
                 Done_internal <= '0';
             WHEN LOOPS =>
-                EN_count <= '1';
                 Done_internal <= '0';
             WHEN FINISH =>
                 Done_internal <= '1';
