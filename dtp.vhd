@@ -132,4 +132,3 @@ BEGIN
     COUNT <= count_reg;
     
 END structural;
-
