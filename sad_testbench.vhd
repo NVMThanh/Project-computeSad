@@ -39,9 +39,9 @@ begin
     begin
         while true loop
             clk <= '0';
-            wait for CLK_PERIOD / 2;
+            wait for CLK_PERIOD;
             clk <= '1';
-            wait for CLK_PERIOD / 2;
+            wait for CLK_PERIOD;
         end loop;
     end process;
 
@@ -55,35 +55,36 @@ begin
         wait for CLK_PERIOD;
 
         -- Load data into memory
-        wen1 <= '1'; wen2 <= '1'; wen3 <= '0';
-        din1 <= std_logic_vector(to_unsigned(7, input_w));
-        din2 <= std_logic_vector(to_unsigned(3, input_w));
-        wait for CLK_PERIOD;
-
-        din1 <= std_logic_vector(to_unsigned(4, input_w));
-        din2 <= std_logic_vector(to_signed(-5, input_w));
-        wait for CLK_PERIOD;
-
-        din1 <= std_logic_vector(to_unsigned(12, input_w));
-        din2 <= std_logic_vector(to_unsigned(3, input_w));
-        wait for CLK_PERIOD;
-
-        din1 <= std_logic_vector(to_signed(-5, input_w));
-        din2 <= std_logic_vector(to_unsigned(9, input_w));
-        wait for CLK_PERIOD;
-
-        din1 <= std_logic_vector(to_signed(-11, input_w));
-        din2 <= std_logic_vector(to_signed(-12, input_w));
-        wait for CLK_PERIOD;
-
+        wen1 <= '1'; 
+	wen2 <= '1'; 
+	wen3 <= '0';
         din1 <= std_logic_vector(to_unsigned(10, input_w));
-        din2 <= std_logic_vector(to_unsigned(12, input_w));
+        din2 <= std_logic_vector(to_unsigned(2, input_w));
+        wait for CLK_PERIOD;
+
+        din1 <= std_logic_vector(to_unsigned(9, input_w));
+        din2 <= std_logic_vector(to_signed(7, input_w));
+        wait for CLK_PERIOD;
+
+        din1 <= std_logic_vector(to_unsigned(5, input_w));
+        din2 <= std_logic_vector(to_unsigned(2, input_w));
+        wait for CLK_PERIOD;
+
+        din1 <= std_logic_vector(to_signed(8, input_w));
+        din2 <= std_logic_vector(to_unsigned(2, input_w));
+        wait for CLK_PERIOD;
+
+        din1 <= std_logic_vector(to_signed(14, input_w));
+        din2 <= std_logic_vector(to_signed(1, input_w));
+        wait for CLK_PERIOD;
+
+        din1 <= std_logic_vector(to_unsigned(1, input_w));
+        din2 <= std_logic_vector(to_unsigned(10, input_w));
         wait for CLK_PERIOD;
 
         -- Start the SAD operation
         start <= '1';
         wait for CLK_PERIOD;
-        start <= '0';
 
         -- Wait for the done signal
         wait until done = '1';
