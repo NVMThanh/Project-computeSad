@@ -79,7 +79,7 @@ BEGIN
         Done_internal <= '0';
         EN_count <= '1';
         CLR_count <= '0';
-        Wen3 <= '0';
+        Wen3 <= '1';
         Ren1 <= '1';
         Ren2 <= '1';
         Ren3 <= '1';
@@ -89,35 +89,22 @@ BEGIN
                 Done_internal <= '0';
             WHEN SETUP =>
                 Done_internal <= '0';
-                Wen1 <= '1';
-                Wen2 <= '1';
+                
             WHEN START_STATE =>
-		Wen3 <= '1';
-                Wen1 <= '0';
-                Wen2 <= '0';
-		Ren1 <= '1';
-                Ren2 <= '1';
+		
                 Done_internal <= '0';
             WHEN CALCULATE =>
-                Ren1 <= '1';
-                Ren2 <= '1';
+               
                 Done_internal <= '0';
             WHEN COMPARE_STATE =>
-                Ren1 <= '1';
-                Ren2 <= '1';
+                
                 Done_internal <= '0';
             WHEN ADD =>
-                Ren1 <= '1';
-                Ren2 <= '1';
-                Ren3 <= '1';
-                Wen3 <= '1';
+                
                 Done_internal <= '0';
             WHEN SUB =>
                 EN_count <= '1';
-                Ren1 <= '1';
-                Ren2 <= '1';
-                Ren3 <= '1';
-                Wen3 <= '1';
+                
                 Done_internal <= '0';
             WHEN LOOPS =>
                 Done_internal <= '0';

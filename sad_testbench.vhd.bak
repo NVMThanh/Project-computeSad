@@ -33,7 +33,7 @@ begin
             Din1 => din1,
             Din2 => din2,
 	    Dout3 => dout3,
-            done => done
+            done => done,
         );
 
     -- Clock generation process
